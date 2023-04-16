@@ -26,16 +26,21 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  List<Widget> score = [
-    Icon(
-      Icons.check,
-      color: Colors.green,
-    ),
-    Icon(
-      Icons.close,
-      color: Colors.red,
-    ),
+  List<Widget> score = [];
+
+  List<String> questions = [
+    'Kathmandu is the capital city of Nepal',
+    'Russia is in Europe',
+    'Ukraine is a NATO country',
   ];
+
+  List<bool> answers = [
+    true,
+    false,
+    false,
+  ];
+
+  int que_num = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +54,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                'This is where the question text will go.',
+                questions[que_num],
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -66,7 +71,7 @@ class _QuizPageState extends State<QuizPage> {
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
-              child: Text(
+              child: const Text(
                 'True',
                 style: TextStyle(
                   color: Colors.white,
@@ -74,16 +79,16 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                setState(
-                  () {
-                    score.add(
-                      Icon(
-                        Icons.check,
-                        color: Colors.green,
-                      ),
-                    );
-                  },
-                );
+                bool correctAnswer = answers[que_num];
+
+                if (correctAnswer == true) {
+                  print('Answer is correct');
+                } else {
+                  print('Answer is wrong');
+                }
+                setState(() {
+                  que_num++;
+                });
               },
             ),
           ),
@@ -103,16 +108,15 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                setState(
-                  () {
-                    score.add(
-                      Icon(
-                        Icons.close,
-                        color: Colors.red,
-                      ),
-                    );
-                  },
-                );
+                bool correctAnswer = answers[que_num];
+                if (correctAnswer == false) {
+                  print('Answer is correct');
+                } else {
+                  print('Answer is wrong');
+                }
+                setState(() {
+                  que_num++;
+                });
               },
             ),
           ),
