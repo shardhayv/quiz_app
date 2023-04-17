@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'quiz_brain.dart';
+
 void main() => runApp(Quizzler());
 
 class Quizzler extends StatelessWidget {
@@ -28,17 +30,8 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Widget> score = [];
 
-  List<String> questions = [
-    'Kathmandu is the capital city of Nepal',
-    'Russia is in Europe',
-    'Ukraine is a NATO country',
-  ];
 
-  List<bool> answers = [
-    true,
-    false,
-    false,
-  ];
+QuizBrain quizBrain = QuizBrain();
 
   int que_num = 0;
 
@@ -54,7 +47,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questions[que_num],
+                quizBrain.questionBank[que_num].questionText,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -79,7 +72,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctAnswer = answers[que_num];
+                bool correctAnswer = quizBrain.questionBank[que_num].questionAnswer;
 
                 if (correctAnswer == true) {
                   print('Answer is correct');
@@ -108,7 +101,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctAnswer = answers[que_num];
+                bool correctAnswer = quizBrain.questionBank[que_num].questionAnswer;
                 if (correctAnswer == false) {
                   print('Answer is correct');
                 } else {
