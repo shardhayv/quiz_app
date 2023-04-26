@@ -9,11 +9,11 @@ class Quizzler extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.red.shade900,
-        body: const SafeArea(
+        backgroundColor: Colors.blueGrey,
+        body: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.0),
             child: QuizPage(),
@@ -33,6 +33,29 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Widget> score = [];
+
+  void checkAnswer(bool pickedAnswer) {
+    bool correctAnswer = quizBrain.getAnswerText();
+    setState(() {
+      if (pickedAnswer == correctAnswer) {
+        score.add(
+          const Icon(
+            Icons.check,
+            color: Colors.green,
+          ),
+        );
+      } else {
+        score.add(
+          const Icon(
+            Icons.close,
+            color: Colors.red,
+          ),
+        );
+      }
+
+      quizBrain.nextQuestion();
+    });
+  }
 
   QuizBrain quizBrain = QuizBrain();
 
@@ -63,7 +86,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(15.0),
             child: ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
               ),
               child: const Text(
                 'True',
@@ -73,16 +96,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctAnswer = quizBrain.getAnswerText();
-
-                if (correctAnswer == true) {
-                  print('Answer is correct');
-                } else {
-                  print('Answer is wrong');
-                }
-                setState(() {
-                  quizBrain.nextQuestion();
-                });
+                checkAnswer(true);
               },
             ),
           ),
@@ -92,7 +106,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(15.0),
             child: ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
               ),
               child: const Text(
                 'False',
@@ -102,15 +116,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctAnswer = quizBrain.getAnswerText();
-                if (correctAnswer == false) {
-                  print('Answer is correct');
-                } else {
-                  print('Answer is wrong');
-                }
-                setState(() {
-                  quizBrain.nextQuestion();
-                });
+                checkAnswer(false);
               },
             ),
           ),
