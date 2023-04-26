@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'quiz_brain.dart';
 
-void main() => runApp(Quizzler());
+void main() => runApp(const Quizzler());
 
 class Quizzler extends StatelessWidget {
+  const Quizzler({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.grey.shade900,
-        body: SafeArea(
+        backgroundColor: Colors.red.shade900,
+        body: const SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.0),
             child: QuizPage(),
@@ -23,6 +25,8 @@ class Quizzler extends StatelessWidget {
 }
 
 class QuizPage extends StatefulWidget {
+  const QuizPage({super.key});
+
   @override
   _QuizPageState createState() => _QuizPageState();
 }
@@ -30,10 +34,7 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Widget> score = [];
 
-
-QuizBrain quizBrain = QuizBrain();
-
-  int que_num = 0;
+  QuizBrain quizBrain = QuizBrain();
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +45,12 @@ QuizBrain quizBrain = QuizBrain();
         Expanded(
           flex: 5,
           child: Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                quizBrain.questionBank[que_num].questionText,
+                quizBrain.getQuestionText(),
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 25.0,
                   color: Colors.white,
                 ),
@@ -59,7 +60,7 @@ QuizBrain quizBrain = QuizBrain();
         ),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(15.0),
             child: ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
@@ -72,7 +73,7 @@ QuizBrain quizBrain = QuizBrain();
                 ),
               ),
               onPressed: () {
-                bool correctAnswer = quizBrain.questionBank[que_num].questionAnswer;
+                bool correctAnswer = quizBrain.getAnswerText();
 
                 if (correctAnswer == true) {
                   print('Answer is correct');
@@ -80,7 +81,7 @@ QuizBrain quizBrain = QuizBrain();
                   print('Answer is wrong');
                 }
                 setState(() {
-                  que_num++;
+                  quizBrain.nextQuestion();
                 });
               },
             ),
@@ -88,12 +89,12 @@ QuizBrain quizBrain = QuizBrain();
         ),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(15.0),
             child: ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
-              child: Text(
+              child: const Text(
                 'False',
                 style: TextStyle(
                   fontSize: 20.0,
@@ -101,14 +102,14 @@ QuizBrain quizBrain = QuizBrain();
                 ),
               ),
               onPressed: () {
-                bool correctAnswer = quizBrain.questionBank[que_num].questionAnswer;
+                bool correctAnswer = quizBrain.getAnswerText();
                 if (correctAnswer == false) {
                   print('Answer is correct');
                 } else {
                   print('Answer is wrong');
                 }
                 setState(() {
-                  que_num++;
+                  quizBrain.nextQuestion();
                 });
               },
             ),
